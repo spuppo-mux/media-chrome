@@ -17,9 +17,9 @@ test.describe.configure({ mode: 'parallel' });
 const htmlFiles = findHtmlFiles(EXAMPLES_DIR);
 
 for (const relPath of htmlFiles) {
-  if (SKIP_PLAY_TEST.has(relPath)) continue;
-
   test(`vanilla/${relPath} - media plays`, async ({ page }) => {
+    test.skip(SKIP_PLAY_TEST.has(relPath));
+
     await page.goto(`/examples/vanilla/${relPath}`, { waitUntil: 'load' });
 
     // Skip if no native element found (only custom media elements present)
