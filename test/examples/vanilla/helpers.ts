@@ -65,6 +65,7 @@ export async function injectSyntheticStream(page: Page): Promise<SYNTH_STREAM_RE
  * - No media elements (index, memory-leak-tester, media-chrome-menu)
  * - Not a real page (iframe embeds another example)
  * - Intentionally shows error states (media-error-dialog)
+ * - JWPlayer media element - CDN fails sometimes, external to this repo
  */
 export const SKIP_PLAY_TEST = new Set([
   'index.html',
@@ -72,4 +73,5 @@ export const SKIP_PLAY_TEST = new Set([
   'iframe.html',
   'control-elements/media-chrome-menu.html',
   'control-elements/media-error-dialog.html',
+  'media-elements/jwplayer.html',
 ]);
