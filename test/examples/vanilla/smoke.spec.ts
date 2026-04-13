@@ -11,6 +11,8 @@
 import { test, expect } from 'playwright/test';
 import { findHtmlFiles, EXAMPLES_DIR } from './helpers.js';
 
+test.describe.configure({ mode: 'parallel' });
+
 const htmlFiles = findHtmlFiles(EXAMPLES_DIR);
 
 for (const relPath of htmlFiles) {
