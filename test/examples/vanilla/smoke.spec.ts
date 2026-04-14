@@ -13,8 +13,10 @@ import { findHtmlFiles, EXAMPLES_DIR } from './helpers.js';
 
 test.describe.configure({ mode: 'parallel' });
 
-const SKIPPED_FILES = new Set([
-  'media-elements/jwplayer.html', // JW Player example is currently broken
+const SKIPPED_FILES: Set<string> = new Set();
+const EXPECTS_ERROR: Set<string> = new Set([
+  // JW Player will log CORS errors until we have a dedicated asset.
+  'media-elements/jwplayer.html', 
 ]);
 
 const htmlFiles = findHtmlFiles(EXAMPLES_DIR);
@@ -41,6 +43,9 @@ for (const relPath of htmlFiles) {
       `Unregistered custom elements: ${undefinedElements.join(', ')}`
     ).toHaveLength(0);
 
+    if (EXPECTS_ERROR.has(relPath)){
+      return; // Exit test to avoid failure
+    }
     expect(pageErrors, `Page errors: ${pageErrors.join('; ')}`).toHaveLength(0);
   });
 }
