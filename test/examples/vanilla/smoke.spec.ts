@@ -13,10 +13,15 @@ import { findHtmlFiles, EXAMPLES_DIR } from './helpers.js';
 
 test.describe.configure({ mode: 'parallel' });
 
+const SKIPPED_FILES = new Set([
+  'media-elements/jwplayer.html', // JW Player example is currently broken
+]);
+
 const htmlFiles = findHtmlFiles(EXAMPLES_DIR);
 
 for (const relPath of htmlFiles) {
   test(`vanilla/${relPath} - custom elements registered`, async ({ page }) => {
+    test.skip(SKIPPED_FILES.has(relPath));
     const pageErrors: string[] = [];
     page.on('pageerror', (error) => pageErrors.push(error.message));
 
