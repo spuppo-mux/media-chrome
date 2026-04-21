@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 jobs:
   test:
+    name: Run Unit Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,6 +48,7 @@ jobs:
       - run: npm run build
 
   test-examples:
+    name: Run Tests on Example Pages
     needs: test
     runs-on: ubuntu-latest
     steps:
