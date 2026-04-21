@@ -28,13 +28,19 @@ for (const relPath of htmlFiles) {
 
     await page.goto(`/examples/vanilla/${relPath}`, { waitUntil: 'load' });
 
-    // Find all media-* custom elements present in the main document
-    const undefinedElements = await page.evaluate(() => {
+    // Under parallel server load, module scripts can finish fetching slightly after
+    // `waitUntil: 'load'`. Wait up to 5s for every media-* element to be defined
+    // before asserting, so the check is not racy.
+    const undefinedElements = await page.evaluate(async () => {
       const tagNames = new Set(
         [...document.querySelectorAll('*')]
           .map((el) => el.tagName.toLowerCase())
           .filter((tag) => tag.startsWith('media-'))
       );
+      await Promise.race([
+        Promise.all([...tagNames].map((tag) => customElements.whenDefined(tag))),
+        new Promise<void>((resolve) => setTimeout(resolve, 5000)),
+      ]);
       return [...tagNames].filter((tag) => !customElements.get(tag));
     });
 
