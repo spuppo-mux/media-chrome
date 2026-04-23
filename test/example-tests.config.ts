@@ -1,8 +1,5 @@
 import { defineConfig, devices } from 'playwright/test';
-
-const VANILLA_PORT = 4567;
-const VITE_PORT = 4568;
-const NEXT_PORT = 4569;
+import { VANILLA_PORT, VITE_PORT, NEXT_PORT } from './ports.js';
 
 export default defineConfig({
   testDir: './examples',

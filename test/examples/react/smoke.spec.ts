@@ -7,11 +7,9 @@
  *   3. (react-wrappers only) media-* custom elements are registered
  */
 import { test, expect } from 'playwright/test';
+import { VITE_PORT, NEXT_PORT } from '../../ports.js';
 
 test.describe.configure({ mode: 'parallel' });
-
-const VITE_PORT = 4568;
-const NEXT_PORT = 4569;
 
 // MUI + Emotion always produces a hydration mismatch in Next.js dev mode due to
 // server-rendered <style> tags differing from the client. Known limitation of the example.
